@@ -1,12 +1,12 @@
-  
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 /* base styles */
 body {
-  font-family: Raleway, sans-serif;
+  font-family: "Press Start 2P", system-ui;
+
   margin: 0;
   font-size: 1.5em;
   text-align: center;
-  background: #1b1523;
+  background-color: #12023b;
   color: #fff;
 }
