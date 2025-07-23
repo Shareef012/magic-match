@@ -17,6 +17,8 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [matchedCount, setMatchedCount] = useState(0);
   const shuffleCards = () => {
     const shuffledCards = [...cardsImages, ...cardsImages]
       .sort(() => Math.random() - 0.5)
@@ -26,6 +28,9 @@ function App() {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns(0);
+    setGameOver(false);
+    setDisabled(false);
+    setMatchedCount(0);
   };
 
   const handleChoice = (card) => {
@@ -47,6 +52,7 @@ function App() {
             } else return card;
           });
         });
+        setMatchedCount((prevCount) => prevCount + 2);
         resetChoices();
       } else {
         setTimeout(() => resetChoices(), 1000);
@@ -61,11 +67,18 @@ function App() {
     shuffleCards();
   }, []);
 
+  useEffect(() => {
+    if (matchedCount > 0 && matchedCount === cardsImages.length * 2) {
+      setGameOver(true);
+    }
+  }, [matchedCount, cardsImages]);
+
   const resetChoices = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns((turns) => turns + 1);
     setDisabled(false);
+    setGameOver(false);
   };
 
   return (
@@ -84,6 +97,15 @@ function App() {
         ))}
       </div>
       <p>Turns: {turns}</p>
+      {gameOver && (
+        <div className="popup">
+          <div className="popup-content">
+            <h2>🎉 Game Over!</h2>
+            <p>You completed the game in {turns} turns.</p>
+            <button onClick={shuffleCards}>Play Again</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
